@@ -34,16 +34,14 @@ AI 让写代码前所未有的快，但"理解代码"却越来越难：
 | **Hermes Agent** | skills 目录安装 | 对话触发 |
 | **其他 AI Agent** | 任意可读 Markdown 指令的工具 | 引用 SKILL.md 即可 |
 
-## 快速安装
+## 安装
 
-**从 SkillHub（推荐）**
-> 在 WorkBuddy 对话中输入：`安装 vibe-coding-learning skill`
-
-**手动安装**
 ```bash
 git clone https://github.com/lyqqqq66666/vibe-coding-learning.git
 cp -r vibe-coding-learning/skills/vibe-coding-learning ~/.workbuddy/skills/
 ```
+
+各工具路径见上方兼容表，换一下目标目录即可。
 
 ## 四种模式
 
