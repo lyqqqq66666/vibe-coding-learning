@@ -473,21 +473,18 @@ JSON Web Token 是一种基于 JSON 的开放标准（RFC 7519），用于在各
 
 | 工具/资源 | 用途 | 获取方式 | 优先级 |
 |----------|------|---------|--------|
-| **Trae IDE** | Skill 的原生运行环境，SOLO 模式支持 | [trae.ai](https://www.trae.ai) 下载安装 | **必须** |
-| **Web Search 能力** | 搜索教程推荐、技术文档 | Trae 内置 WebSearch 工具，或安装 Tavily/Brave Search MCP | **必须** |
-| **Memory MCP Server** | 跨会话记忆持久化，知识图谱构建 | Trae MCP 市场安装，或从 GitHub 获取开源方案 | **必须** |
+| **任意 AI Coding 工具** | Skill 的运行环境，支持 Markdown 指令即可 | WorkBuddy、Trae、Claude Code、Cursor 等 | **必须** |
+| **一个代码项目** | 你需要有实际的代码才能生成学习笔记 | 本仓库 examples/ 提供了示例项目 | **必须** |
+
+> **注意**：SKILL.md 设计为纯文件执行，不需要任何 MCP Server 即可正常工作。以下工具仅用于增强体验。
 
 ### 9.2 推荐安装的（增强体验）
 
 | 工具/资源 | 用途 | 获取方式 | 优先级 |
 |----------|------|---------|--------|
-| **Sequential Thinking MCP** | 结构化思维流程，帮助拆解复杂知识点 | Trae MCP 市场搜索安装 | 推荐 |
-| **Context7 MCP** | 实时获取官方文档最新内容和代码示例 | Trae MCP 市场搜索安装 | 推荐 |
-| **Playwright MCP** | 浏览器自动化，抓取教程网页内容 | Trae MCP 市场搜索安装 | 推荐 |
-| **GitHub MCP** | 代码搜索、开源项目学习 | Trae MCP 市场搜索安装 | 推荐 |
-| **html-report Skill** | 生成精美的 HTML 格式学习笔记 | Trae 内置 Skill | 推荐 |
+| **Web Search 能力** | 搜索实时教程推荐（无此能力时 Skill 会用通用知识标注） | 各 AI 工具内置或安装 Tavily/Brave Search MCP | 推荐 |
 
-### 9.3 可选的（扩展功能）
+### 9.3 可选安装的（扩展功能）
 
 | 工具/资源 | 用途 | 获取方式 | 优先级 |
 |----------|------|---------|--------|

@@ -59,7 +59,7 @@ Skill 启动后先判断执行模式，而非无差别全量执行。
 2. **可推断不提问**：项目名、文件列表、技术栈等能从上下文推断的信息，直接采纳不出声
 3. **给出默认值**：需要选择时先给推荐方案并说明理由，让用户一键确认而非从零选择
 4. **用户说"直接做"→ 切 Auto**：不再提问，按当前判断执行
-5. **超时降级**：用户 30 秒内未回复确认，按默认方案继续
+5. **默认方案兜底**：如用户犹豫或回复模糊（如"随便""都可以"），直接按推荐方案执行，不再追问
 
 ## Input
 
@@ -83,7 +83,7 @@ Skill 启动后先判断执行模式，而非无差别全量执行。
 
 ### Mode 1: Generate Learning Note (after coding session)
 
-Execute these steps in order:
+Execute these steps in order. Phase progress messages ("> 正在...") are for long-running execution — if all steps complete within a few seconds in Auto mode, skip the messages and output results directly.
 
 ### Phase 1/5: 采集与识别
 
@@ -119,9 +119,9 @@ Execute these steps in order:
 - For each key file, write:
   - What this file does in plain language
   - Line-by-line or section-by-section explanation
-  - Why it's designed this way (not just what it does)
-  - What design pattern it uses (if any)
-  - How to write it from scratch without AI
+  - Why it's designed this way (not just what it does). Answer: "为什么这里用这种结构而不是另一种？如果有替代方案，是什么？"
+  - What design pattern it uses (if any). For each pattern found, also explain what the code would look like without it
+  - **How to write it from scratch without AI**: give a step-by-step reconstruction guide — start with an empty file, what functions/classes to create first, what logic goes where. This is the most important part for learning
 
 ### Phase 3/5: 陷阱与资源
 
@@ -133,11 +133,11 @@ Execute these steps in order:
 - Base this on both the code analysis and general domain knowledge
 
 **Step 6 — Recommend Learning Resources**
-- Use WebSearch to find relevant tutorials for each knowledge point
+- **Attempt WebSearch first** to find relevant tutorials for each knowledge point
 - Search queries: "[knowledge point] tutorial bilibili", "[knowledge point] official documentation"
 - Prioritize: Bilibili video tutorials, official docs, well-known tech blogs
 - Provide 1-3 resources per knowledge point with title and URL
-- If WebSearch fails, provide recommendations from general knowledge
+- **If WebSearch is unavailable or fails**: mark the section explicitly as `（基于通用知识推荐，非实时搜索结果）` and skip URL links — never fabricate search results
 
 ### Phase 4/5: 更新与归档
 
@@ -150,7 +150,8 @@ Execute these steps in order:
   | YYYY-MM-DD | [domain] | [keywords] | [link to note] |
   ```
 - Check if `learning-notes/progress.md` exists. If not, create it.
-- Update domain progress bars and statistics
+- Update domain progress bars and statistics. Use three mastery levels: 🟢 mastered / 🟡 understood / 🔴 exposed
+- After updating, the progress.md should show per-domain breakdown with mastery ratios
 
 **Step 8 — Save to Three-Layer Structure**
 
@@ -161,11 +162,12 @@ Save outputs to the appropriate locations in the three-layer directory structure
    - Save note as: `topics/[project-name]/YYYY-MM-DD-[title].md`
    - Example: `topics/fastapi-login-register/2026-06-11-fastapi-login-register.md`
 
-2. **domains/** — Update the domain and stack indexes
+2. **domains/** — Update the domain and stack indexes (MANDATORY — do NOT skip)
    - Determine the domain (e.g., `backend`) and stack (e.g., `fastapi`)
    - Create or update `domains/[domain]/_index.md` with knowledge checklist
    - Create or update `domains/[domain]/[stack]/_index.md` with stack-specific notes
    - Link back to the topic note from the domain index
+   - After writing, verify: check that the domain index file exists and contains today's knowledge points
 
 3. **cards/** — Save extracted knowledge point cards
    - Determine the card category (e.g., `auth`, `css`, `js`, `python`)
@@ -194,18 +196,23 @@ When user asks to review or recall previous learning:
    - First, list the knowledge points WITHOUT code (test recall)
    - Ask the user to explain the core logic in their own words
    - Then reveal the code explanation for comparison
-   - Mark knowledge points the user struggled with
+   - Mark knowledge points the user struggled with as 🔴 exposed in the mastery tracker, so Mode 3 reflects the true mastery level
 
 ### Mode 3: Learning Progress Check (on user request)
 
 When user asks about overall progress:
 
 1. Read `learning-notes/progress.md`
-2. Present:
+2. Scan `learning-notes/domains/` for domain-level status
+3. Present:
    - Total learning days, domains covered, knowledge points count
-   - Per-domain progress with visual progress bars
+   - **Per-domain progress with three mastery levels**:
+     - 🟢 **熟练**：能不看代码讲清楚原理 → 对应 domain index 中标记为 `mastered` 的知识点
+     - 🟡 **理解**：知道怎么用但还不能脱离代码 → 对应 `understood`
+     - 🔴 **接触过**：见过但还不会用 → 对应 `exposed`
+   - **Mastery ratio** calculation: `熟练 / (熟练+理解+接触) × 100%`
    - Recent learning calendar (last 7 days)
-   - Suggested next topics based on gaps
+   - Suggested next topics based on gaps: prioritize 🔴 items with highest interview relevance
 
 ### Mode 4: Interview Preparation (on user request)
 
