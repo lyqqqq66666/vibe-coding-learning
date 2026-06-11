@@ -30,9 +30,14 @@ node_modules/
 # Personal learning notes (not for public repo)
 learning-notes/
 
-# Unrelated project data (not part of the skill)
-mediacrawler_data/
+# Old HTML artifacts (keep locally, not in git)
 fastapi-learning-notes/
 vibe-coding-learning-skill-proposal/
+
+# Crawler project (separate from skill)
+爬虫/
+mediacrawler_data/
+
+# Unrelated files
 .playwright-cli/
 2025十大流行语_*.xlsx
