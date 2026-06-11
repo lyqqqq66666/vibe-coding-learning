@@ -26,3 +26,13 @@ build/
 
 # Node (if you add frontend build tooling later)
 node_modules/
+
+# Personal learning notes (not for public repo)
+learning-notes/
+
+# Unrelated project data (not part of the skill)
+mediacrawler_data/
+fastapi-learning-notes/
+vibe-coding-learning-skill-proposal/
+.playwright-cli/
+2025十大流行语_*.xlsx
