@@ -1,0 +1,54 @@
+[    1305ms] [INFO] 框架和 SDK 输出的日志默认不展示，可在框架配置文件中设置开启，详见 https://doc.weixin.qq.com/doc/w3_AWkASAb9APAr8IdJI5VS0OyqetUE6?scode=ANAAyQcbAAgB8qKjm9AWkASAb9APA @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:0
+[    1413ms] [LOG] Error @ :2
+[    1582ms] [LOG] Error @ :2
+[    1613ms] [LOG] Error @ :2
+[    1646ms] [LOG] Error @ :2
+[    1661ms] [LOG] Error @ :2
+[    2718ms] [ERROR] Hydration completed but contains mismatches. @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/library-vue.4322adab.js:0
+[    3124ms] [LOG] Error @ :2
+[    3154ms] [LOG] Error @ :2
+[    3177ms] [LOG] Error @ :2
+[    3193ms] [LOG] Error @ :2
+[    3466ms] [LOG] Service Worker registered success with scope: https://www.xiaohongshu.com/ @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    3966ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v1/system/config, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    3982ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    3986ms] [LOG] Error @ :2
+[    4022ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4051ms] [LOG] Error @ :2
+[    4107ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4112ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4130ms] [LOG] Error @ :2
+[    4191ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4196ms] [ERROR] Failed to load resource: the server responded with a status of 461 () @ https://edith.xiaohongshu.com/api/sns/web/v1/login/activate:0
+[    4201ms] [ERROR] [loginStatusInterceptor] Response error: TypeError: Cannot read properties of undefined (reading 'status')
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209363)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 null undefined @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4229ms] [LOG] Error @ :2
+[    4270ms] [LOG] Error @ :2
+[    4633ms] [ERROR] [loginStatusInterceptor] Response error: HTTPServerError: 无登录信息，或登录信息为空
+    at fulfilled (https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:209656)
+    at https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/vendor-dynamic.b8e982fb.js:1:210185 {data: Object, status: 401, statusText: , headers: Object, config: Object} {url: //edith.xiaohongshu.com/api/sns/web/v2/user/me, method: get, headers: Object, transformRequest: Array(1), transformResponse: Array(1)} @ https://fe-static.xhscdn.com/formula-static/xhs-pc-web/public/resource/js/index.e2111b75.js:24
+[    4636ms] [LOG] Error @ :2
+[    4952ms] [INFO] 框架和 SDK 输出的日志默认不展示，可在框架配置文件中设置开启，详见 https://doc.weixin.qq.com/doc/w3_AWkASAb9APAr8IdJI5VS0OyqetUE6?scode=ANAAyQcbAAgB8qKjm9AWkASAb9APA @ https://fe-static.xhscdn.com/formula-static/fe-login/public/resource/js/library-launcher.844ab2b3.js:0
+[    5052ms] [LOG] Error @ :2
+[    6674ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6674ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[    6675ms] [ERROR] Failed to load resource: net::ERR_BLOCKED_BY_CLIENT @ chrome-extension://invalid/:0
+[   18048ms] [LOG] Error @ :2

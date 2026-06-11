@@ -1,0 +1,8 @@
+- generic [ref=e4]:
+  - img [ref=e6]
+  - generic [ref=e7]: 安全限制
+  - generic [ref=e8]: IP存在风险，请切换可靠网络环境后重试
+  - generic [ref=e9]: "300012"
+  - generic [ref=e10]:
+    - generic [ref=e11] [cursor=pointer]: 我要反馈
+    - generic [ref=e12] [cursor=pointer]: 返回首页

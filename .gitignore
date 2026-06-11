@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# WorkBuddy internal (memory logs, not part of the skill)
+.workbuddy/
+
+# Databases
+*.db
+*.sqlite3
+
+# Build / dist
+dist/
+build/
+*.egg
+
+# Node (if you add frontend build tooling later)
+node_modules/

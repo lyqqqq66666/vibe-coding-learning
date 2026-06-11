@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 / 注册</title>
+  <style>
+    /* ========== 基础重置与变量 ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --primary-dark: #4338ca;
+      --bg: #f0f2f5;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --success: #10b981;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ========== 页面布局 ========== */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* ========== 卡片容器 ========== */
+    .auth-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+      animation: cardIn 0.5s ease;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== 标签切换栏 ========== */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color 0.25s, background 0.25s;
+      position: relative;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      background: rgba(79, 70, 229, 0.04);
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 20%;
+      width: 60%;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* ========== 表单区域 ========== */
+    .form-panel {
+      padding: 32px 36px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      padding: 12px 40px 12px 14px;
+      font-size: 15px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      color: var(--text);
+      background: #f8fafc;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      background: #fff;
+    }
+
+    .input-wrap input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+    }
+
+    .input-wrap input.success {
+      border-color: var(--success);
+    }
+
+    /* 密码眼睛图标 */
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text-light);
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .toggle-pwd:hover {
+      color: var(--text);
+    }
+
+    /* 错误提示 */
+    .error-msg {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 4px;
+      min-height: 18px;
+      transition: opacity 0.3s;
+    }
+
+    /* ========== 按钮 ========== */
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.25s, opacity 0.25s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ========== Toast 提示 ========== */
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      z-index: 1000;
+      animation: toastIn 0.35s ease, toastOut 0.35s ease 2.2s forwards;
+      pointer-events: none;
+    }
+
+    .toast.success { background: var(--success); }
+    .toast.error   { background: var(--error); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    @keyframes toastOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 480px) {
+      .form-panel { padding: 24px 20px; }
+      .tab-btn { font-size: 15px; padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast 容器 -->
+  <div id="toast"></div>
+
+  <!-- 认证卡片 -->
+  <div class="auth-card">
+    <!-- 标签切换 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="login">登 录</button>
+      <button class="tab-btn" data-tab="register">注 册</button>
+    </div>
+
+    <!-- ============ 登录表单 ============ -->
+    <form class="form-panel" id="login-form" novalidate>
+      <div class="form-group">
+        <label for="login-email">邮箱</label>
+        <div class="input-wrap">
+          <input
+            type="email"
+            id="login-email"
+            placeholder="请输入邮箱"
+            autocomplete="email"
+          >
+        </div>
+        <div class="error-msg" id="login-email-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">密码</label>
+        <div class="input-wrap">
+          <input
+            type="password"
+            id="login-password"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+          >
+          <button type="button" class="toggle-pwd" data-target="login-password">👁</button>
+        </div>
+        <div class="error-msg" id="login-password-error"></div>
+      </div>
+
+      <button type="submit" class="submit-btn">登 录</button>
+    </form>
+
+    <!-- ============ 注册表单 ============ -->
+    <form class="form-panel" id="register-form" style="display: none;" novalidate>
+      <div class="form-group">
+        <label for="register-username">用户名</label>
+        <div class="input-wrap">
+          <input
+            type="text"
+            id="register-username"
+            placeholder="请输入用户名（2-20位）"
+            autocomplete="username"
+          >
+        </div>
+        <div class="error-msg" id="register-username-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-email">邮箱</label>
+        <div class="input-wrap">
+          <input
+            type="email"
+            id="register-email"
+            placeholder="请输入邮箱"
+            autocomplete="email"
+          >
+        </div>
+        <div class="error-msg" id="register-email-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-password">密码</label>
+        <div class="input-wrap">
+          <input
+            type="password"
+            id="register-password"
+            placeholder="至少6位，含字母和数字"
+            autocomplete="new-password"
+          >
+          <button type="button" class="toggle-pwd" data-target="register-password">👁</button>
+        </div>
+        <div class="error-msg" id="register-password-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-confirm">确认密码</label>
+        <div class="input-wrap">
+          <input
+            type="password"
+            id="register-confirm"
+            placeholder="请再次输入密码"
+            autocomplete="new-password"
+          >
+          <button type="button" class="toggle-pwd" data-target="register-confirm">👁</button>
+        </div>
+        <div class="error-msg" id="register-confirm-error"></div>
+      </div>
+
+      <button type="submit" class="submit-btn">注 册</button>
+    </form>
+  </div>
+
+  <!-- ========== JavaScript 逻辑 ========== -->
+  <script>
+  /* ───── 工具函数 ───── */
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  /* Toast 提示 */
+  function showToast(msg, type) {
+    const toast = $("#toast");
+    toast.textContent = msg;
+    toast.className = "toast " + type;
+    // 重新触发动画：先移除再添加
+    toast.style.animation = "none";
+    void toast.offsetWidth; // 触发重排
+    toast.style.animation = "";
+    // 2.5s 后自动清除（与 CSS 动画时长一致）
+    setTimeout(() => { toast.className = ""; toast.textContent = ""; }, 2600);
+  }
+
+  /* 清除输入框状态 */
+  function clearInputStatus(input) {
+    input.classList.remove("error", "success");
+  }
+
+  /* ───── 标签切换 ───── */
+  $$(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      // 切换激活样式
+      $$(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      // 切换表单显示
+      const tab = btn.dataset.tab;
+      if (tab === "login") {
+        $("#login-form").style.display = "block";
+        $("#register-form").style.display = "none";
+      } else {
+        $("#login-form").style.display = "none";
+        $("#register-form").style.display = "block";
+      }
+
+      // 清空错误状态
+      document.querySelectorAll(".error-msg").forEach(e => e.textContent = "");
+      document.querySelectorAll("input").forEach(clearInputStatus);
+    });
+  });
+
+  /* ───── 密码显隐切换 ───── */
+  $$(".toggle-pwd").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.dataset.target;
+      const input = document.getElementById(targetId);
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      btn.textContent = isPassword ? "🙈" : "👁";
+    });
+  });
+
+  /* ───── 校验函数 ───── */
+  function showFieldError(id, msg) {
+    const el = $("#" + id);
+    if (el) {
+      el.classList.add("error");
+      el.classList.remove("success");
+    }
+    const errEl = $("#" + id + "-error");
+    if (errEl) errEl.textContent = msg;
+  }
+
+  function clearFieldError(id) {
+    const el = $("#" + id);
+    if (el) el.classList.remove("error");
+    const errEl = $("#" + id + "-error");
+    if (errEl) errEl.textContent = "";
+  }
+
+  // 登录校验
+  function validateLogin() {
+    let valid = true;
+    const email = $("#login-email").value.trim();
+    const pwd   = $("#login-password").value;
+
+    if (!email) {
+      showFieldError("login-email", "请输入邮箱");
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFieldError("login-email", "邮箱格式不正确");
+      valid = false;
+    } else {
+      clearFieldError("login-email");
+      $("#login-email").classList.add("success");
+    }
+
+    if (!pwd) {
+      showFieldError("login-password", "请输入密码");
+      valid = false;
+    } else if (pwd.length < 6) {
+      showFieldError("login-password", "密码长度不能少于6位");
+      valid = false;
+    } else {
+      clearFieldError("login-password");
+      $("#login-password").classList.add("success");
+    }
+
+    return valid;
+  }
+
+  // 注册校验
+  function validateRegister() {
+    let valid = true;
+    const username = $("#register-username").value.trim();
+    const email    = $("#register-email").value.trim();
+    const pwd      = $("#register-password").value;
+    const confirm  = $("#register-confirm").value;
+
+    if (!username) {
+      showFieldError("register-username", "请输入用户名");
+      valid = false;
+    } else if (username.length < 2 || username.length > 20) {
+      showFieldError("register-username", "用户名长度应在2-20位之间");
+      valid = false;
+    } else {
+      clearFieldError("register-username");
+      $("#register-username").classList.add("success");
+    }
+
+    if (!email) {
+      showFieldError("register-email", "请输入邮箱");
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFieldError("register-email", "邮箱格式不正确");
+      valid = false;
+    } else {
+      clearFieldError("register-email");
+      $("#register-email").classList.add("success");
+    }
+
+    if (!pwd) {
+      showFieldError("register-password", "请输入密码");
+      valid = false;
+    } else if (pwd.length < 6) {
+      showFieldError("register-password", "密码长度不能少于6位");
+      valid = false;
+    } else if (!/[a-zA-Z]/.test(pwd) || !/\d/.test(pwd)) {
+      showFieldError("register-password", "密码需同时包含字母和数字");
+      valid = false;
+    } else {
+      clearFieldError("register-password");
+      $("#register-password").classList.add("success");
+    }
+
+    if (!confirm) {
+      showFieldError("register-confirm", "请确认密码");
+      valid = false;
+    } else if (confirm !== pwd) {
+      showFieldError("register-confirm", "两次输入的密码不一致");
+      valid = false;
+    } else {
+      clearFieldError("register-confirm");
+      $("#register-confirm").classList.add("success");
+    }
+
+    return valid;
+  }
+
+  /* ───── 表单提交 ───── */
+  $("#login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (validateLogin()) {
+      const email = $("#login-email").value.trim();
+      showToast("登录成功（模拟）欢迎，" + email, "success");
+    }
+  });
+
+  $("#register-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (validateRegister()) {
+      const username = $("#register-username").value.trim();
+      showToast("注册成功（模拟）欢迎，" + username + "！", "success");
+    }
+  });
+
+  /* ───── 输入时清除错误 ───── */
+  document.querySelectorAll("input").forEach(input => {
+    input.addEventListener("input", () => {
+      clearInputStatus(input);
+      const errEl = document.getElementById(input.id + "-error");
+      if (errEl) errEl.textContent = "";
+    });
+  });
+  </script>
+</body>
+</html>
