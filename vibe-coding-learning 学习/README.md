@@ -31,6 +31,7 @@ AI 让写代码前所未有的快，但"理解代码"却越来越难：
 | **Cursor** | `.cursor/rules/` | 引用 SKILL.md 指令 |
 | **Claude Code** | `.claude/skills/` | `/vibe-coding-learning` |
 | **OpenClaw** | skills 目录安装 | 对话触发 |
+| **Hermes Agent** | skills 目录安装 | 对话触发 |
 | **其他 AI Agent** | 任意可读 Markdown 指令的工具 | 引用 SKILL.md 即可 |
 
 ## 快速安装
