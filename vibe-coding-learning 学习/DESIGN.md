@@ -89,22 +89,31 @@
 ### 3.2 Skill 目录结构
 
 ```
-skills/vibe-coding-learning/
-├── SKILL.md                          # 主入口（控制在 500 行以内）
-├── references/
-│   ├── knowledge-taxonomy.md          # 编程技术知识分类体系
-│   ├── output-templates.md            # 输出模板（MD + HTML）
-│   ├── memory-management.md           # 记忆与知识管理策略
-│   ├── tutorial-recommendation.md    # 教程推荐策略与资源库
-│   ├── interview-prep.md             # 面试准备扩展模块
-│   └── examples/
-│       ├── example-backend-auth.md    # 示例：后端认证学习笔记
-│       ├── example-frontend-react.md # 示例：前端 React 学习笔记
-│       └── example-agent-langgraph.md# 示例：AI Agent 学习笔记
-└── templates/
-    ├── daily-learning-note.md        # 每日学习笔记模板
-    ├── knowledge-point.md             # 知识点卡片模板
-    └── learning-calendar.md            # 学习日历模板
+vibe-coding-learning 学习/
+├── skills/vibe-coding-learning/       # Skill 核心
+│   ├── SKILL.md                        # 主入口（控制在 500 行以内）
+│   ├── references/
+│   │   ├── knowledge-taxonomy.md        # 编程技术知识分类体系
+│   │   ├── output-templates.md          # 输出模板（MD + HTML）
+│   │   ├── memory-management.md         # 记忆与知识管理策略
+│   │   ├── tutorial-recommendation.md  # 教程推荐策略与资源库
+│   │   ├── interview-prep.md           # 面试准备扩展模块
+│   │   └── examples/
+│   │       ├── example-backend-auth.md  # 示例：后端认证学习笔记
+│   │       ├── example-frontend-login.md# 示例：前端登录注册学习笔记
+│   │       └── example-agent-langgraph.md# 示例：AI Agent 学习笔记
+│   └── templates/
+│       ├── daily-learning-note.md      # 每日学习笔记模板
+│       ├── knowledge-point.md           # 知识点卡片模板
+│       └── learning-calendar.md          # 学习日历模板
+├── examples/                           # 配套示例项目
+│   ├── backend-login/
+│   └── frontend-login/
+├── demo-output/                        # Skill 输出效果演示
+├── learning-notes/                     # 用户本地学习数据（gitignore）
+├── DESIGN.md                           # 本方案文档
+├── README.md
+└── LICENSE
 ```
 
 ### 3.3 SKILL.md 核心结构（草案）
