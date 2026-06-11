@@ -433,10 +433,10 @@ JSON Web Token 是一种基于 JSON 的开放标准（RFC 7519），用于在各
 
 ### 8.1 与校招 Skill 的联动
 
-你提到的"结合 WorkBuddy 或 IMA 使用腾讯校招的 Skill"是一个很好的扩展方向。具体联动方式如下：
+你提到的"结合 WorkBuddy 使用腾讯校招的 Skill"是一个很好的扩展方向。具体联动方式如下：
 
 > **求职学习闭环：**
-> 1. **了解目标**：用户先通过校招 Skill（如腾讯 IMA 的校招助手）了解目标岗位的技术要求
+> 1. **了解目标**：用户先通过校招 Skill（如 WorkBuddy 的校招助手）了解目标岗位的技术要求
 > 2. **制定计划**：根据岗位 JD，结合本 Skill 的知识分类体系，生成有针对性的学习计划
 > 3. **实践学习**：通过 Vibe Coding 完成相关项目，本 Skill 自动生成学习笔记
 > 4. **面试准备**：每个知识点卡片中包含"面试怎么讲"模块，可直接用于面试准备
@@ -491,7 +491,7 @@ JSON Web Token 是一种基于 JSON 的开放标准（RFC 7519），用于在各
 
 | 工具/资源 | 用途 | 获取方式 | 优先级 |
 |----------|------|---------|--------|
-| **腾讯 IMA 校招 Skill** | 了解目标岗位技术要求，制定学习计划 | 腾讯 IMA 平台搜索"校招"相关 Skill | 可选 |
+| **WorkBuddy 校招 Skill** | 了解目标岗位技术要求，制定学习计划 | WorkBuddy 平台搜索"校招"相关 Skill | 可选 |
 | **WorkBuddy** | 桌面 AI 助手，支持技能平台和腾讯生态 | [workbuddy.tencent.com](https://workbuddy.tencent.com) | 可选 |
 | **Understand-Anything** | 将代码库转为可交互知识图谱 | GitHub 开源项目（3万+ Star） | 可选 |
 | **Claude-Mem** | Claude Code 跨会话持久化记忆 | GitHub 开源项目（3万+ Star） | 可选 |
