@@ -27,14 +27,16 @@ AI 让写代码前所未有的快，但"理解代码"却越来越难：
 | 工具 | 安装路径 | 触发方式 |
 |------|---------|---------|
 | **WorkBuddy** | `~/.workbuddy/skills/vibe-coding-learning/` | 编码完成后说"帮我总结" |
-| **Trae** | `~/.trae/skills/vibe-coding-learning/` | 同上 |
-| **Cursor** | `.cursor/rules/` | 引用 SKILL.md 指令 |
-| **Claude Code** | `.claude/skills/` | `/vibe-coding-learning` |
-| **OpenClaw** | skills 目录安装 | 对话触发 |
-| **Hermes Agent** | skills 目录安装 | 对话触发 |
+| **Trae** | `~/.trae-cn/skills/vibe-coding-learning/` | 同上 |
+| **Claude Code** | `~/.claude/skills/vibe-coding-learning/` | `/vibe-coding-learning` |
+| **OpenClaw** | `~/.openclaw/skills/vibe-coding-learning/` | 对话触发 |
+| **Codex** | `~/.codex/skills/vibe-coding-learning/` | 对话触发 |
+| **Cursor** | 手动导入或引用 SKILL.md | 引用指令 |
 | **其他 AI Agent** | 任意可读 Markdown 指令的工具 | 引用 SKILL.md 即可 |
 
 ## 安装
+
+### 方式一：手动复制（适合最终用户）
 
 ```bash
 git clone https://github.com/lyqqqq66666/vibe-coding-learning.git
@@ -42,6 +44,51 @@ cp -r vibe-coding-learning/skills/vibe-coding-learning ~/.workbuddy/skills/
 ```
 
 各工具路径见上方兼容表，换一下目标目录即可。
+
+### 方式二：使用同步脚本（推荐，适合所有用户）
+
+项目自带 `sync-skills.sh`，一键同步到所有已安装的 AI 工具：
+
+```bash
+git clone https://github.com/lyqqqq66666/vibe-coding-learning.git
+cd vibe-coding-learning
+
+# 预览同步目标
+bash sync-skills.sh --dry-run
+
+# 执行同步（自动同步到所有 enabled 的工具）
+bash sync-skills.sh
+
+# 只同步到指定工具
+bash sync-skills.sh --target=workbuddy
+```
+
+如果某个工具未安装，编辑 `sync-config.json` 将对应 `enabled` 改为 `false` 即可跳过。
+
+### 方式三：自动同步（适合开发者）
+
+如果你参与 Skill 开发，可以激活 Git Hooks，每次 `git push main` 或 `git merge dev` 后自动同步：
+
+```bash
+cd vibe-coding-learning
+git config core.hooksPath .githooks
+```
+
+激活后，以下操作会自动触发同步：
+- `git push origin main` → 推送到 main 后自动同步
+- `git merge dev`（在 main 上）→ 合并后自动同步
+
+> ⚠️ 注意：dev 分支推送不会触发同步，只有 main 分支会。
+
+## 更新 Skill
+
+当 GitHub 上的 Skill 有更新时，重新同步即可：
+
+```bash
+cd vibe-coding-learning
+git pull origin main
+bash sync-skills.sh
+```
 
 ## 四种模式
 

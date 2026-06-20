@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# =============================================================================
+# .githooks/post-merge
+#
+# 在 `git merge` 之后自动触发 Skill 同步。
+# 这样当你把 dev 分支合并到 main 后，本地所有 AI 工具的全局 Skill
+# 会自动更新到最新版本（即使你忘了 push）。
+#
+# 安装方式：
+#   cd /path/to/vibe-coding-learning
+#   git config core.hooksPath .githooks
+#
+# 或者手动复制到 .git/hooks/：
+#   cp .githooks/post-merge .git/hooks/post-merge
+#   chmod +x .git/hooks/post-merge
+# =============================================================================
+
+set -uo pipefail
+
+# ── 颜色输出 ──────────────────────────────────────────────────────────────
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+echo ""
+echo "=============================================="
+echo "  🔀  Git Merge 检测到，触发 Skill 同步"
+echo "=============================================="
+echo ""
+
+# ── 获取脚本所在目录（即项目根目录） ──────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$SCRIPT_DIR"
+
+# ── 只在合并到 main 或 master 时触发（避免 feature 分支合并时也触发）───
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+
+if [[ "$CURRENT_BRANCH" != "main" && "$CURRENT_BRANCH" != "master" ]]; then
+    echo -e "${BLUE}[INFO]${NC}  当前分支是 $CURRENT_BRANCH，跳过自动同步。"
+    echo "  （只在 main/master 分支执行合并后才会触发同步）"
+    echo ""
+    exit 0
+fi
+
+echo -e "${BLUE}[INFO]${NC}  当前分支: $CURRENT_BRANCH"
+echo ""
+
+# ── 调用同步脚本 ──────────────────────────────────────────────────────────
+if [ -x "./sync-skills.sh" ]; then
+    bash ./sync-skills.sh
+    SYNC_EXIT=$?
+else
+    echo "  [WARN] sync-skills.sh 不可执行，尝试直接运行..."
+    bash ./sync-skills.sh
+    SYNC_EXIT=$?
+fi
+
+echo ""
+if [ $SYNC_EXIT -eq 0 ]; then
+    echo -e "${GREEN}  ✅ Skill 同步完成！${NC}"
+    echo "  本地的 WorkBuddy / Claude / OpenClaw / Codex / Trae"
+    echo "  已全部更新到最新版本。"
+else
+    echo -e "${YELLOW}  ⚠️  Skill 同步过程中出现警告（退出码 $SYNC_EXIT）${NC}"
+    echo "  请检查 sync-config.json 中的路径配置是否正确。"
+fi
+
+echo ""
+echo "=============================================="
+echo ""
+
+exit 0

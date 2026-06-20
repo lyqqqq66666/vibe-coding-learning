@@ -1,0 +1,28 @@
+{
+  "_comment": "sync-skills.sh 的配置文件。修改 target 路径后重新运行脚本即可生效。",
+  "skill_name": "vibe-coding-learning",
+  "skill_source": "skills/vibe-coding-learning",
+  "targets": {
+    "workbuddy": {
+      "path": "~/.workbuddy/skills",
+      "enabled": true
+    },
+    "claude": {
+      "path": "~/.claude/skills",
+      "enabled": true
+    },
+    "openclaw": {
+      "path": "~/.openclaw/skills",
+      "enabled": true
+    },
+    "codex": {
+      "path": "~/.codex/skills",
+      "enabled": true
+    },
+    "trae": {
+      "path": "~/.trae-cn/skills",
+      "enabled": true
+    }
+  },
+  "_note": "如果某个工具未安装，将 enabled 改为 false 即可跳过。自定义路径直接修改 path 字段。"
+}
