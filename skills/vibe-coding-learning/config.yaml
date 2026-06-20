@@ -1,0 +1,80 @@
+# vibe-coding-learning 用户配置
+# 用户可修改此文件来自定义 Skill 行为
+# 修改后需重启 AI 会话生效
+
+# === 学习偏好 ===
+learning:
+  # 专注领域（优先级从高到低）
+  focus_areas:
+    - backend
+    - api
+    - database
+    - frontend
+    - devops
+  
+  # 学习深度：shallow（快速记录）/ medium（默认）/ deep（详细解释+拓展阅读）
+  depth: medium
+  
+  # 输出语言：zh（中文）/ en（英文）/ bilingual（中英对照）
+  output_language: zh
+  
+  # 是否启用费曼学习法（输出后反问用户）
+  feynman_enabled: true
+  
+  # 间隔复习提醒（天）：超过此天数未复习则提醒
+  review_reminder_days: 7
+
+# === 输出格式 ===
+output:
+  # 笔记模板：standard（标准三栏）/ cornell（康奈尔）/ mindmap（思维导图）
+  note_template: standard
+  
+  # 是否生成代码示例
+  include_code_examples: true
+  
+  # 是否生成 Mermaid 图表
+  include_diagrams: false
+  
+  # 每次输出最大知识点数量（防止过长）
+  max_knowledge_points: 10
+
+# === 健康检查 ===
+health:
+  # 启用未整理提醒
+  inbox_reminder: true
+  
+  # 同一天学的内容自动建议关联
+  auto_suggest_connection: true
+  
+  # 领域遗忘检测（天）：超过此天数未接触该领域则提醒
+ 遗忘_detection_days: 30
+  
+  # 笔记质量检查：内容过少时提示补充
+  quality_check: true
+
+# === 同步设置 ===
+sync:
+  # 自动同步的目标 AI 工具
+  targets:
+    workbuddy: true
+    claude: true
+    openclaw: true
+    codex: true
+    trae: true
+  
+  # 同步前是否预览
+  preview_before_sync: false
+
+# === 高级 ===
+advanced:
+  # 启用对话分析模式（Mode 5）
+  conversation_analysis: true
+  
+  # 提示词优化建议
+  prompt_optimization: true
+  
+  # 每周深度总结（替代 Mode 3 浅层统计）
+  weekly_synthesis: true
+  
+  # 知识关联深度：1（仅当天）= 2（±3天）= 3（全库关联）
+  connection_depth: 2
