@@ -104,11 +104,28 @@ Skill 启动后先判断执行模式，而非无差别全量执行。
 
 ### Mode 1: Generate Learning Note (after coding session)
 
-Execute these steps in order. Phase progress messages ("> 正在...") are for long-running execution — if all steps complete within a few seconds in Auto mode, skip the messages and output results directly.
+**执行前 — 确定执行深度**
 
-### Phase 1/5: 采集与识别
+读取 `config.yaml` 中的 `learning.depth` 字段，确定本次执行深度：
 
-> 进度输出: "正在分析你的代码结构..."
+| 深度 | 取值 | 执行范围 | 适用场景 | 预计 token |
+|-------|------|---------|---------|------------|
+| 轻量 | `light` | Phase 1-2（仅知识点+卡片） | 短会话、简单代码、快速记录 | ~2K |
+| 标准 | `standard` | Phase 1-4（含笔记+陷阱，不含资源搜索） | 日常学习（默认） | ~5K |
+| 深度 | `deep` | 全量 Phase 1-5 | 复杂项目、面试准备、复盘 | ~10K |
+
+**自动判断逻辑**（当 `depth` 未设置或设为 `auto` 时）：
+- 运行 `python3 scripts/analyze-session.py --quick` 分析本次会话复杂度
+- 脚本输出 `light` / `standard` / `deep` 建议，按建议执行
+- 脚本逻辑：代码变更 < 50 行 → light；50-200 行 → standard；> 200 行或跨多个文件 → deep
+
+**深度覆盖**：用户可在对话中直接说"轻量模式"、"详细一点"来临时覆盖配置。
+
+---
+
+### Phase 1/5: 采集与识别 [所有深度均执行]
+
+> 进度输出（仅 standard/deep 模式）: "正在分析你的代码结构..."
 
 **Step 1 — Collect Context**
 - Scan the project directory to identify files created or modified during this session
@@ -121,11 +138,13 @@ Execute these steps in order. Phase progress messages ("> 正在...") are for lo
   - **Stacks** (examples): fastapi, django, express, react, vue, vanilla-js, docker, kubernetes, langchain, pytorch
 - A session may span multiple domains and stacks
 
-### Phase 2/5: 提炼与解读
+---
 
-> 进度输出: "已识别技术领域，正在提炼知识点..."
+### Phase 2/5: 提炼与解读 [light 仅输出知识点列表；standard/deep 输出完整解读]
 
-**Step 3 — Extract Knowledge Points**
+> 进度输出（仅 standard/deep 模式）: "已识别技术领域，正在提炼知识点..."
+
+**Step 3 — Extract Knowledge Points** [所有深度均执行]
 - From the code changes, identify 3-8 concrete knowledge points
 - For each knowledge point, define:
   - Name (e.g., "JWT Authentication", "React useState Hook")
@@ -134,37 +153,42 @@ Execute these steps in order. Phase progress messages ("> 正在...") are for lo
   - Which file and line range implements it
   - Common mistakes / pitfalls
 - Knowledge points should be things a CS student would encounter in coursework or interviews
+- **light 模式**：到此为止，直接输出知识点列表 + 知识卡片，跳过 Step 4-8
 
-**Step 4 — Write Code Explanation**
+**Step 4 — Write Code Explanation** [standard/deep 执行]
 - Determine the recommended reading order (which file first, which function first)
 - For each key file, write:
   - What this file does in plain language
   - Line-by-line or section-by-section explanation
   - Why it's designed this way (not just what it does). Answer: "为什么这里用这种结构而不是另一种？如果有替代方案，是什么？"
   - What design pattern it uses (if any). For each pattern found, also explain what the code would look like without it
-  - **How to write it from scratch without AI**: give a step-by-step reconstruction guide — start with an empty file, what functions/classes to create first, what logic goes where. This is the most important part for learning
+  - **[deep 模式才输出]** **How to write it from scratch without AI**: step-by-step reconstruction guide
 
-### Phase 3/5: 陷阱与资源
+---
 
-> 进度输出: "知识点已提取，正在整理常见陷阱和推荐资源..."
+### Phase 3/5: 陷阱与资源 [仅 standard/deep 执行；资源搜索仅 deep]
 
-**Step 5 — Compile Pitfalls**
+> 进度输出（仅 deep 模式）: "知识点已提取，正在整理常见陷阱..."
+
+**Step 5 — Compile Pitfalls** [standard/deep 执行]
 - List 3-5 common mistakes for this domain
 - Format: table with columns [Pitfall, Correct Approach, Common Mistake]
 - Base this on both the code analysis and general domain knowledge
 
-**Step 6 — Recommend Learning Resources**
+**Step 6 — Recommend Learning Resources** [仅 deep 执行]
 - **Attempt WebSearch first** to find relevant tutorials for each knowledge point
 - Search queries: "[knowledge point] tutorial bilibili", "[knowledge point] official documentation"
 - Prioritize: Bilibili video tutorials, official docs, well-known tech blogs
 - Provide 1-3 resources per knowledge point with title and URL
 - **If WebSearch is unavailable or fails**: mark the section explicitly as `（基于通用知识推荐，非实时搜索结果）` and skip URL links — never fabricate search results
 
-### Phase 4/5: 更新与归档
+---
 
-> 进度输出: "正在更新学习日历和目录结构..."
+### Phase 4/5: 更新与归档 [standard/deep 执行]
 
-**Step 7 — Update Learning Calendar and Progress**
+> 进度输出（仅 deep 模式）: "正在更新学习日历和目录结构..."
+
+**Step 7 — Update Learning Calendar and Progress** [standard/deep 执行]
 - Check if `learning-notes/calendar/YYYY-MM.md` exists. If not, create it.
 - Append today's entry to the calendar:
   ```
@@ -174,14 +198,31 @@ Execute these steps in order. Phase progress messages ("> 正在...") are for lo
 - Update domain progress bars and statistics. Use three mastery levels: 🟢 mastered / 🟡 understood / 🔴 exposed
 - After updating, the progress.md should show per-domain breakdown with mastery ratios
 
-**Step 8 — Save to Three-Layer Structure**
+**Step 8 — Save to Three-Layer Structure** [standard/deep 执行]
 
-Save outputs to the appropriate locations in the three-layer directory structure:
+Save outputs to the appropriate locations in the three-layer directory structure.
+
+**每个笔记文件必须包含 YAML frontmatter**（M1 Step 2 已识别 domain/stack，保存时自动设 `status: processed`）：
+
+```markdown
+---
+title: "[笔记标题]"
+date: YYYY-MM-DD
+domain: [backend/frontend/...]
+stack: [fastapi/react/...]
+status: processed          # 自动设置，无需用户确认
+last_review_date: null
+review_count: 0
+mastery_level: "🔴 exposed"   # 初次创建默认 exposed
+tags: [tag1, tag2]
+---
+```
 
 1. **topics/** — Save the daily learning note
    - Create a project-specific folder: `topics/[project-name]/`
    - Save note as: `topics/[project-name]/YYYY-MM-DD-[title].md`
    - Example: `topics/fastapi-login-register/2026-06-11-fastapi-login-register.md`
+   - **必须包含上方 frontmatter**
 
 2. **domains/** — Update the domain and stack indexes (MANDATORY — do NOT skip)
    - Determine the domain (e.g., `backend`) and stack (e.g., `fastapi`)
@@ -196,6 +237,7 @@ Save outputs to the appropriate locations in the three-layer directory structure
    - Save each card as: `cards/[category]/[kebab-case-name].md`
    - Example: `cards/auth/jwt.md`, `cards/css/flexbox.md`
    - Cards should be self-contained and reusable across any project
+   - Cards should also include frontmatter with `status: processed`
 
 ### Phase 5/5: 最终产出
 

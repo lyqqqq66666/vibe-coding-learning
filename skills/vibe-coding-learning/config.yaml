@@ -12,8 +12,8 @@ learning:
     - frontend
     - devops
   
-  # 学习深度：shallow（快速记录）/ medium（默认）/ deep（详细解释+拓展阅读）
-  depth: medium
+  # 学习深度：light（仅知识点+卡片，最快）/ standard（默认，含笔记+陷阱）/ deep（全量，含重构指南+资源）
+  depth: standard
   
   # 输出语言：zh（中文）/ en（英文）/ bilingual（中英对照）
   output_language: zh
