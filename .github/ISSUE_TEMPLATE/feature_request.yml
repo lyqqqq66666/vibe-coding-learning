@@ -1,0 +1,43 @@
+name: 💡 功能建议
+description: 新模式、新功能、优化想法等
+title: "[Feature] "
+labels: ["enhancement", "skill"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到了什么问题？
+      description: 当前 Skill 无法满足的场景或痛点
+      placeholder: "例如：我希望 Skill 能自动检测我遗漏的知识点，而不是等我手动问"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: 你希望怎么解决？
+      description: 你的想法或建议方案
+      placeholder: "例如：加一个 Mode 10 自动遗漏检测，每天扫描 learning-notes/ 找出没有卡片的知识点"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 建议类别
+      options:
+        - 新模式（Mode X）
+        - 现有模式优化
+        - 配置层扩展（config.yaml）
+        - 脚本/工具增强
+        - 输出格式改进
+        - 多工具兼容性
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考资料或竞品（可选）
+      description: 有没有其他 Skill/工具已经实现了类似功能？贴链接
+      placeholder: "例如：Obsidian PKM 的 inbox-triage 机制"
+    validations:
+      required: false

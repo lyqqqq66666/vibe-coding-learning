@@ -1,0 +1,40 @@
+name: 📝 使用体验反馈
+description: 不算 bug 也不算功能建议，就是对使用感受的反馈
+title: "[Feedback] "
+labels: ["feedback", "skill"]
+body:
+  - type: textarea
+    id: experience
+    attributes:
+      label: 你的使用体验
+      description: 任何你觉得值得一提的感受——好的坏的都可以
+      placeholder: "例如：Mode 1 生成笔记的速度很快，但知识点有时候太浅了，希望能更深入一些"
+    validations:
+      required: true
+  - type: dropdown
+    id: rating
+    attributes:
+      label: 整体评分
+      options:
+        - ⭐⭐⭐⭐⭐ 非常好用
+        - ⭐⭐⭐⭐ 基本好用，有些小问题
+        - ⭐⭐⭐ 一般，需要改进
+        - ⭐⭐ 不太好用
+        - ⭐ 不好用
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: 使用的 AI 工具
+      placeholder: "例如：WorkBuddy"
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 你的典型使用场景（可选）
+      description: 你平时怎么用这个 Skill？在什么场景下触发？
+      placeholder: "例如：每天写完代码后都会说'总结今天学的'"
+    validations:
+      required: false

@@ -86,29 +86,50 @@
 - **渐进式披露**：SKILL.md 作为入口，详细模板和参考文件拆分到 references/ 目录
 - **输入输出结构化**：明确定义 Input 和 Output 格式
 
-### 3.2 Skill 目录结构
+### 3.2 Skill 目录结构（v1.1.0 当前版本）
 
 ```
-vibe-coding-learning 学习/
-├── skills/vibe-coding-learning/       # Skill 核心
-│   ├── SKILL.md                        # 主入口（控制在 500 行以内）
-│   ├── references/
-│   │   ├── knowledge-taxonomy.md        # 编程技术知识分类体系
-│   │   ├── output-templates.md          # 输出模板（MD + HTML）
-│   │   ├── memory-management.md         # 记忆与知识管理策略
-│   │   ├── tutorial-recommendation.md  # 教程推荐策略与资源库
-│   │   ├── interview-prep.md           # 面试准备扩展模块
+vibe-coding-learning/
+├── skills/vibe-coding-learning/       # Skill 核心（22 个文件）
+│   ├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 执行策略）
+│   ├── config.yaml                     # 配置层（7 大类用户可自定义设置）
+│   ├── references/                     # 参考手册（渐进式加载）
+│   │   ├── mode-routing.md              # 意图→模式路由规则
+│   │   ├── output-routing.md            # 输出后续分流规则
+│   │   ├── interview-prep.md            # Mode 4 面试详细流程
+│   │   ├── inbox-triage.md              # Mode 6 知识生命周期管理
+│   │   ├── connection-review.md         # Mode 7 知识关联
+│   │   ├── weekly-synthesis.md          # Mode 8 深度周总结
+│   │   ├── health-check.md              # Mode 9 健康诊断
+│   │   ├── knowledge-taxonomy.md        # 9 领域技术分类体系
+│   │   ├── memory-management.md         # 三层记忆归档策略
+│   │   ├── tutorial-recommendation.md   # 教程搜索词库
+│   │   ├── output-templates.md          # 产出物格式规范
+│   │   ├── test-cases.md                # 测试用例集
 │   │   └── examples/
-│   │       ├── example-backend-auth.md  # 示例：后端认证学习笔记
-│   │       ├── example-frontend-login.md# 示例：前端登录注册学习笔记
-│   │       └── example-agent-langgraph.md# 示例：AI Agent 学习笔记
-│   └── templates/
-│       ├── daily-learning-note.md      # 每日学习笔记模板
-│       ├── knowledge-point.md           # 知识点卡片模板
-│       └── learning-calendar.md          # 学习日历模板
+│   │       ├── example-backend-auth.md
+│   │       ├── example-frontend-login.md
+│   │       └── example-agent-langgraph.md
+│   ├── scripts/                        # 确定性脚本
+│   │   ├── validate-structure.py        # 目录结构校验（7 检查项）
+│   │   └── analyze-session.py          # 会话复杂度分析 + 深度推荐
+│   └── templates/                      # 输出模板骨架
+│       ├── daily-learning-note.md
+│       ├── knowledge-point.md
+│       └── learning-calendar.md
+├── sync-skills.sh                      # 一键同步脚本
+├── sync-config.json                    # 同步目标配置（5 个 AI 工具）
+├── .githooks/                          # Git Hooks（push main / merge main 自动同步）
+│   ├── post-push
+│   └── post-merge
+├── TESTING.md                          # 端到端测试指南（14 步）
+├── VERSION-STRATEGY.md                 # 版本迭代策略（SemVer + 优先级矩阵）
+├── CONTRIBUTING.md                     # 贡献指南
+├── .github/ISSUE_TEMPLATE/             # GitHub Issue 模板
+│   ├── bug_report.yml
+│   ├── feature_request.yml
+│   └── experience_feedback.yml
 ├── examples/                           # 配套示例项目
-│   ├── backend-login/
-│   └── frontend-login/
 ├── demo-output/                        # Skill 输出效果演示
 ├── learning-notes/                     # 用户本地学习数据（gitignore）
 ├── DESIGN.md                           # 本方案文档

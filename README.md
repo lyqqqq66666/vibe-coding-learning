@@ -90,14 +90,31 @@ git pull origin main
 bash sync-skills.sh
 ```
 
-## 四种模式
+## 九种模式
 
 | 模式 | 触发方式 | 做什么 |
 |------|---------|--------|
-| Mode 1: 生成笔记 | 完成编码后说"帮我总结" | 提取知识点 → 代码讲解 → 易错点 → 推荐资源 |
-| Mode 2: 互动复习 | "帮我复习" | 先回忆 → 再揭晓答案 → 标记薄弱点 |
-| Mode 3: 学习进度 | "学习进度" | 总览仪表盘 + 各领域进度条 |
+| Mode 1: 生成笔记 | "总结今天学的"、"这段代码讲一下" | 提取知识点 → 代码讲解 → 易错点 → 推荐资源（支持 light/standard/deep 三档） |
+| Mode 2: 互动复习 | "复习昨天的"、"帮我测一下 JWT" | 先回忆 → 再揭晓答案 → 标记薄弱点 |
+| Mode 3: 学习进度 | "我学了多少了"、"学习进度怎么样" | 总览仪表盘 + 各领域 mastery ratio |
 | Mode 4: 面试准备 | "准备面试" / "模拟面试" | 基于已学内容生成话术和模拟提问 |
+| Mode 5: 提示词优化 | "我的提示词怎么样"、"怎么问才能得到更好回答" | 分析对话质量 → 提示词评分 → 改前改后对比 |
+| Mode 6: 收件箱整理 | "有什么没整理的笔记吗" | 扫描未处理会话 → 批量整理 → 状态流转 |
+| Mode 7: 知识关联 | "今天学的和之前有什么关联" | 自动关联新旧知识 → 交叉引用 → 知识成网 |
+| Mode 8: 深度周总结 | "周总结"、"这周学了什么" | 领域覆盖分析 → 薄弱点识别 → 下周建议 |
+| Mode 9: 健康诊断 | "检查学习健康度" | 遗忘风险检测 → 领域偏科 → 笔记堆积 |
+
+### 三档执行深度
+
+Mode 1 支持三档深度，控制 token 消耗：
+
+| 深度 | 触发方式 | 内容范围 | Token 量 |
+|------|---------|---------|---------|
+| light | "轻量模式，总结今天学的" | 知识点 + 卡片 | ~2K |
+| standard | "总结今天学的"（默认） | 笔记 + 陷阱 + 索引 | ~5K |
+| deep | "深度模式，总结今天学的" | 全量 + 资源搜索 | ~10K |
+
+也可在 `config.yaml` 里改默认档位，或让 `analyze-session.py` 自动判断。
 
 ## 与其它学习方式的对比
 
@@ -159,25 +176,51 @@ Skill：→ 跨 topic 扫描 → 发现 backend-auth/ 和 frontend-auth/ 都涉�
 ## 项目结构
 
 ```
-skills/vibe-coding-learning/      # Skill 核心
-├── SKILL.md                       # 主入口 + 四种模式工作流
-├── references/                    # AI 参考手册
-│   ├── knowledge-taxonomy.md       # 8 领域技术分类（基于 roadmap.sh）
-│   ├── output-templates.md         # 产出物格式规范
-│   ├── memory-management.md        # 三层归档策略
-│   ├── tutorial-recommendation.md  # 教程搜索词库
-│   ├── interview-prep.md           # Mode 4 面试策略
-│   └── examples/                   # 三份完整示例笔记
-└── templates/                      # 输出模板
+skills/vibe-coding-learning/       # Skill 核心（22 个文件）
+├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 执行策略）
+├── config.yaml                     # 配置层（深度/语言/专注领域/复习间隔等）
+│
+├── references/                     # 参考手册（渐进式加载，按需读取）
+│   ├── mode-routing.md              # 意图→模式路由规则
+│   ├── output-routing.md            # 输出后续分流规则
+│   ├── interview-prep.md            # Mode 4 面试详细流程
+│   ├── inbox-triage.md              # Mode 6 知识生命周期管理
+│   ├── connection-review.md         # Mode 7 知识关联
+│   ├── weekly-synthesis.md          # Mode 8 深度周总结
+│   ├── health-check.md              # Mode 9 健康诊断
+│   ├── knowledge-taxonomy.md        # 9 领域技术分类体系
+│   ├── memory-management.md         # 三层记忆归档策略
+│   ├── tutorial-recommendation.md   # 教程搜索词库
+│   ├── output-templates.md          # 产出物格式规范
+│   ├── test-cases.md                # 测试用例集（10应+5不应+3边界）
+│   └── examples/                    # 三份完整示例笔记
+│       ├── example-backend-auth.md
+│       ├── example-frontend-login.md
+│       └── example-agent-langgraph.md
+│
+├── scripts/                        # 确定性脚本（不依赖 AI 判断）
+│   ├── validate-structure.py        # 目录结构校验（7 个检查项）
+│   └── analyze-session.py          # 会话复杂度分析（推荐深度档位）
+│
+└── templates/                      # 输出模板骨架
+    ├── daily-learning-note.md
+    ├── knowledge-point.md
+    └── learning-calendar.md
 
-examples/                          # 配套示例项目
-├── backend-login/                 # FastAPI + JWT 登录注册
-└── frontend-login/                # HTML/CSS/JS 登录注册
+examples/                           # 配套示例项目（独立可运行）
 
-demo-output/                       # Skill 输出效果演示
-├── topics/    domains/    cards/
-├── calendar/  progress.md
+demo-output/                        # Skill 输出效果演示
+
+learning-notes/                     # 用户本地学习数据（.gitignore）
 ```
+
+### 加载层级
+
+| 层级 | 内容 | 加载时机 |
+|------|------|---------|
+| L1（始终加载） | SKILL.md + config.yaml | Skill 触发时立刻读 |
+| L2（按需加载） | references/ 对应文件 | 模式确定后只读那一个 |
+| L3（工具调用） | scripts/ + templates/ | AI 判断需要确定性验证时 |
 
 ## 许可证
 
