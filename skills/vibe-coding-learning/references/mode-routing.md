@@ -16,6 +16,7 @@
 | 总结、整理、学了什么、今天学的 | `quick_summary` | Mode 1 |
 | 讲一下、为什么、怎么理解、这段代码 | `guided_learning` | Mode 1（Collaborative） |
 | 深入理解、原理、对比、替代方案 | `deep_explanation` | Mode 1（Collaborative） |
+| 费曼自评、我最不熟悉哪个、我能给别人讲清楚 | `feynman_assessment` | Mode 1 Step 10 |
 | 复习、回顾、之前学的、昨天 | `review_recall` | Mode 2 |
 | 进度、学了多少、学习情况、掌握 | `progress_check` | Mode 3 |
 | 面试、准备面试、模拟面试、面试怎么讲 | `interview_prep` | Mode 4 |

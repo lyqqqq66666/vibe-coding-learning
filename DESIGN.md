@@ -86,17 +86,19 @@
 - **渐进式披露**：SKILL.md 作为入口，详细模板和参考文件拆分到 references/ 目录
 - **输入输出结构化**：明确定义 Input 和 Output 格式
 
-### 3.2 Skill 目录结构（v1.1.0 当前版本）
+### 3.2 Skill 目录结构（v1.2.0 当前版本）
 
 ```
 vibe-coding-learning/
-├── skills/vibe-coding-learning/       # Skill 核心（22 个文件）
-│   ├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 执行策略）
+├── skills/vibe-coding-learning/       # Skill 核心（24 个文件）
+│   ├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 费曼自评 + 执行策略）
 │   ├── config.yaml                     # 配置层（7 大类用户可自定义设置）
 │   ├── references/                     # 参考手册（渐进式加载）
 │   │   ├── mode-routing.md              # 意图→模式路由规则
 │   │   ├── output-routing.md            # 输出后续分流规则
 │   │   ├── interview-prep.md            # Mode 4 面试详细流程
+│   │   ├── feynman-assessment.md         # 费曼自评环节（M1 闭环）
+│   │   ├── vibe-coding-origin.md         # Vibe Coding 起源与哲学（Karpathy）
 │   │   ├── inbox-triage.md              # Mode 6 知识生命周期管理
 │   │   ├── connection-review.md         # Mode 7 知识关联
 │   │   ├── weekly-synthesis.md          # Mode 8 深度周总结
@@ -115,8 +117,8 @@ vibe-coding-learning/
 │   │   └── analyze-session.py          # 会话复杂度分析 + 深度推荐
 │   └── templates/                      # 输出模板骨架
 │       ├── daily-learning-note.md
-│       ├── knowledge-point.md
-│       └── learning-calendar.md
+│       ├── knowledge-point.md           # 知识卡片（含主卡片/引用卡片层次）
+│       └── learning-calendar.md         # 学习日历（含周复盘行）
 ├── sync-skills.sh                      # 一键同步脚本
 ├── sync-config.json                    # 同步目标配置（5 个 AI 工具）
 ├── .githooks/                          # Git Hooks（push main / merge main 自动同步）

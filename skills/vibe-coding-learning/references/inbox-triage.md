@@ -96,7 +96,7 @@ stack: fastapi
 status: processed          # inbox / processed / connected / mastered
 last_review_date: null     # YYYY-MM-DD 或 null
 review_count: 0
-mastery_level: "🟡 understood"   # 🟢 mastered / 🟡 understood / 🔴 exposed
+mastery_level: "🟡 understood"   # 🟢🟢 teachable / 🟢 mastered / 🟡 understood / 🔴 exposed
 tags: [auth, jwt, login]
 ---
 

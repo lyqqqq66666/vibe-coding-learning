@@ -21,6 +21,9 @@ learning:
   # 是否启用费曼学习法（输出后反问用户）
   feynman_enabled: true
   
+  # 费曼自评最少知识点数量（少于此数不触发自评）
+  feynman_min_points: 3
+  
   # 间隔复习提醒（天）：超过此天数未复习则提醒
   review_reminder_days: 7
 

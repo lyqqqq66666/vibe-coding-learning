@@ -3,12 +3,20 @@ type: knowledge-point
 domain: {{DOMAIN}}
 topic: {{TOPIC}}
 tags: [{{TAGS}}]
+card_type: {{CARD_TYPE}}  # primary（主卡片，首次完整解释）/ reference（引用卡片，引用主卡片）
+primary_card: {{PRIMARY_CARD_PATH}}  # 仅 reference 类型需要，指向主卡片路径
 ---
 
 # {{TITLE}}
 
-> 知识卡片 — 可跨主题复用
+> 知识卡片 — {{CARD_TYPE_DISPLAY}}
 > 标签：{{TAGS_DISPLAY}}
+
+{{REFERENCE_BLOCK}}
+<!-- 仅 card_type: reference 时显示：
+> 详见 [[{{PRIMARY_CARD_PATH}}]]
+> 本卡片仅补充项目特有用法，完整概念请看主卡片。
+-->
 
 ---
 

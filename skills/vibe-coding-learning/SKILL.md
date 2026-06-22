@@ -6,12 +6,16 @@ description: |
 license: MIT
 metadata:
   author: lyqqqq66666
-  version: "1.1.0"
+  version: "1.2.0"
   tags: [learning, education, cs-students, coding-notes, vibe-coding]
   compatible-tools: [workbuddy, claude-code, openclaw, codex, trae]
 ---
 
 # Vibe Coding Learning
+
+> **"You can outsource your thinking, but not your understanding."** — Andrej Karpathy
+>
+> 把 AI 生成的代码变回你真正理解的知识。详见 `references/vibe-coding-origin.md`。
 
 Transform AI coding sessions into structured learning notes. Help CS students actually learn from vibe coding instead of just generating code.
 
@@ -131,6 +135,11 @@ Skill 启动后先判断执行模式，而非无差别全量执行。
 - Scan the project directory to identify files created or modified during this session
 - If user provided `coding_context`, use it as the primary description
 - Read the key source files to understand what was built
+- **文件覆盖度硬性规则**：
+  - 必须 Read ALL changed files（变更集中 ≥ 80% 的文件都要读）
+  - 还必须 Read 被 changed files import/call 的关联文件（如 api.py import 了 state.py，则 state.py 也必须读）
+  - import 链追踪：至少追踪一层（A import B → 必须读 B）
+  - 覆盖度不达标时在自检清单中标注 `[自检：文件覆盖度不足，仅读了 X/Y 个文件]`
 
 **Step 2 — Identify Technical Domain and Stack**
 - Analyze the code to determine which domain(s) and tech stack(s) it belongs to:
@@ -195,7 +204,7 @@ Skill 启动后先判断执行模式，而非无差别全量执行。
   | YYYY-MM-DD | [domain] | [keywords] | [link to note] |
   ```
 - Check if `learning-notes/progress.md` exists. If not, create it.
-- Update domain progress bars and statistics. Use three mastery levels: 🟢 mastered / 🟡 understood / 🔴 exposed
+- Update domain progress bars and statistics. Use four mastery levels: 🟢🟢 teachable / 🟢 mastered / 🟡 understood / 🔴 exposed
 - After updating, the progress.md should show per-domain breakdown with mastery ratios
 
 **Step 8 — Save to Three-Layer Structure** [standard/deep 执行]
@@ -213,7 +222,7 @@ stack: [fastapi/react/...]
 status: processed          # 自动设置，无需用户确认
 last_review_date: null
 review_count: 0
-mastery_level: "🔴 exposed"   # 初次创建默认 exposed
+mastery_level: "🔴 exposed"   # 初次创建默认 exposed；四级体系：🔴 exposed / 🟡 understood / 🟢 mastered / 🟢🟢 teachable
 tags: [tag1, tag2]
 ---
 ```
@@ -248,6 +257,30 @@ tags: [tag1, tag2]
 - Save to the appropriate topic folder
 - If `preferred_format` is `html`, generate an HTML version using the html-report skill
 
+**Step 10 — 费曼自评** [仅 standard/deep 模式，当 `config.yaml` 的 `feynman_enabled: true` 时]
+
+> 形成"提取 → 整理 → 自评 → 调整"闭环。详见 `references/feynman-assessment.md`。
+
+1. 列出刚才提取的所有知识点，问用户："哪个知识点你最不熟悉？"
+2. 根据回答调整 mastery_level：
+   - 用户说"第 X 个最陌生" → 降级为 `🔴 exposed`
+   - 用户说"第 X 个我能给别人讲" → 升级为 `🟢🟢 teachable`
+   - 用户说"全部熟悉" → 保持原 mastery_level，跳过
+3. 根据自评结果给出后续分流建议（如"建议对 🔴 知识点做 Mode 2 互动复习"）
+
+**deep 模式两步流** [仅 deep 模式执行]
+
+- **Step 10A** — 先生成简版 session log（当日学习日志）：
+  ```markdown
+  ## Session Log — YYYY-MM-DD
+  - 会话时长：~X 分钟
+  - 变更文件：[文件列表]
+  - 关键操作：[操作摘要]
+  - 初步感知：[用户直觉理解]
+  ```
+- **Step 10B** — 再提炼为完整主题笔记（即 Step 9 的输出）
+  > light/standard 直接一步到位，不生成 session log
+
 ### Mode 2: Review Previous Learning (on user request)
 
 When user asks to review or recall previous learning:
@@ -259,7 +292,7 @@ When user asks to review or recall previous learning:
    - First, list the knowledge points WITHOUT code (test recall)
    - Ask the user to explain the core logic in their own words
    - Then reveal the code explanation for comparison
-   - Mark knowledge points the user struggled with as 🔴 exposed in the mastery tracker, so Mode 3 reflects the true mastery level
+   - Mark knowledge points the user struggled with as 🔴 exposed in the mastery tracker (降级规则：🟢🟢 → 🟢 → 🟡 → 🔴，根据复习表现逐级降级), so Mode 3 reflects the true mastery level
 
 ### Mode 3: Learning Progress Check (on user request)
 
@@ -269,11 +302,12 @@ When user asks about overall progress:
 2. Scan `learning-notes/domains/` for domain-level status
 3. Present:
    - Total learning days, domains covered, knowledge points count
-   - **Per-domain progress with three mastery levels**:
-     - 🟢 **熟练**：能不看代码讲清楚原理 → 对应 domain index 中标记为 `mastered` 的知识点
-     - 🟡 **理解**：知道怎么用但还不能脱离代码 → 对应 `understood`
+   - **Per-domain progress with four mastery levels**:
+     - 🟢🟢 **可教学**：能给别人讲清楚，举出类比和例子 → 对应 `teachable`
+     - 🟢 **已掌握**：能不看代码讲清楚原理 → 对应 domain index 中标记为 `mastered` 的知识点
+     - 🟡 **理解了**：知道怎么用但还不能脱离代码 → 对应 `understood`
      - 🔴 **接触过**：见过但还不会用 → 对应 `exposed`
-   - **Mastery ratio** calculation: `熟练 / (熟练+理解+接触) × 100%`
+   - **Mastery ratio** calculation: `可教学+已掌握 / (全部四级) × 100%`
    - Recent learning calendar (last 7 days)
    - Suggested next topics based on gaps: prioritize 🔴 items with highest interview relevance
 
@@ -520,6 +554,11 @@ health:
 - Include reading guidance: "read this function first, then see where it's called"
 - Be honest about uncertainty — if something is ambiguous, say so
 - Keep each daily note focused on ONE session, not a general overview
+- **卡片层次规则**：知识卡片分"主卡片"和"引用卡片"两个层次：
+  - **主卡片**：首次完整解释某个概念的卡片，包含完整的"是什么 / 核心原理 / 怎么用"
+  - **引用卡片**：后续卡片遇到同一概念时，用 `> 详见 [[cards/category/primary-card-name]]` 引用，不再重述
+  - 自检规则：如果两张卡片有 > 3 行内容重复，说明需要改为引用关系
+- **行号引用规则**：所有代码行号引用（如 `state.py:15`）必须在写入前通过 Read 工具实时验证，确保行号准确。不要靠记忆猜测行号——用户点击 IDE 跳转如果对不上，会很失望
 - Knowledge point cards should be self-contained and reusable across sessions
 
 ## Note Template
@@ -622,6 +661,9 @@ When saving knowledge point cards, use these standard categories (create new one
 - [ ] 是否更新了 `learning-notes/progress.md`（如已存在）
 - [ ] 是否保存了知识卡片到 `cards/`（如用户确认）
 - [ ] 教程推荐是否优先 Bilibili 和官方文档（如启用了 WebSearch）
+- [ ] **文件覆盖度**：是否读了 ≥ 80% 变更集中的文件 + 一层 import 链
+- [ ] **行号验证**：代码行号引用（如 `state.py:15`）是否通过 Read 工具实时验证，而非靠记忆猜测
+- [ ] **费曼自评**（standard/deep）：是否在 Step 10 询问了用户对知识点的不熟悉程度
 
 ### Mode 2 输出自检
 
@@ -631,8 +673,8 @@ When saving knowledge point cards, use these standard categories (create new one
 
 ### Mode 3 输出自检
 
-- [ ] 是否展示了三个掌握度层级（🟢🟡🔴）
-- [ ] 是否计算了 mastery ratio
+- [ ] 是否展示了四个掌握度层级（🟢🟢🟢🟡🔴）
+- [ ] 是否计算了 mastery ratio（可教学+已掌握 / 全部四级）
 - [ ] 是否给出了针对弱项的下一步建议
 
 ### Mode 4 输出自检

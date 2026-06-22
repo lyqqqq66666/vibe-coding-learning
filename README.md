@@ -176,14 +176,16 @@ Skill：→ 跨 topic 扫描 → 发现 backend-auth/ 和 frontend-auth/ 都涉�
 ## 项目结构
 
 ```
-skills/vibe-coding-learning/       # Skill 核心（22 个文件）
-├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 执行策略）
+skills/vibe-coding-learning/       # Skill 核心（24 个文件）
+├── SKILL.md                        # 主入口（9 个模式 + 三档深度 + 费曼自评 + 执行策略）
 ├── config.yaml                     # 配置层（深度/语言/专注领域/复习间隔等）
 │
 ├── references/                     # 参考手册（渐进式加载，按需读取）
 │   ├── mode-routing.md              # 意图→模式路由规则
 │   ├── output-routing.md            # 输出后续分流规则
 │   ├── interview-prep.md            # Mode 4 面试详细流程
+│   ├── feynman-assessment.md         # 费曼自评环节（M1 学习闭环）
+│   ├── vibe-coding-origin.md         # Vibe Coding 起源与哲学（Karpathy）
 │   ├── inbox-triage.md              # Mode 6 知识生命周期管理
 │   ├── connection-review.md         # Mode 7 知识关联
 │   ├── weekly-synthesis.md          # Mode 8 深度周总结
@@ -204,8 +206,8 @@ skills/vibe-coding-learning/       # Skill 核心（22 个文件）
 │
 └── templates/                      # 输出模板骨架
     ├── daily-learning-note.md
-    ├── knowledge-point.md
-    └── learning-calendar.md
+    ├── knowledge-point.md           # 知识卡片（含主卡片/引用卡片层次）
+    └── learning-calendar.md         # 学习日历（含周复盘行）
 
 examples/                           # 配套示例项目（独立可运行）
 
@@ -225,3 +227,9 @@ learning-notes/                     # 用户本地学习数据（.gitignore）
 ## 许可证
 
 MIT
+
+## Acknowledgments
+
+- **Andrej Karpathy** — 提出"Vibe Coding"概念和"外包思考但不能外包理解"哲学，本 Skill 的设计理念直接受其启发
+- Karpathy 的开源教育项目（nanoGPT、micrograd、llama2.c）展示了"最小可理解实现"的教学价值，本 Skill 的知识卡片设计遵循同一原则
+- 概念起源和哲学详见 `references/vibe-coding-origin.md`
